@@ -47,6 +47,8 @@ header {
 
 .delivery {
     margin-bottom: 10px;
+    color: green;
+    font-weight: bold;
 }
 
 .total {
@@ -105,15 +107,15 @@ footer {
 
 <h2>Beauty of Joseon SPF50+</h2>
 
-<div class="price">السعر : 230 درهم</div>
-<div class="delivery">التوصيل : 20 درهم</div>
+<div class="price">السعر : 250 درهم</div>
+<div class="delivery">🚚 التوصيل مجاني</div>
 
 <label>اختر العدد :</label>
 <select id="quantity" onchange="calculateTotal()">
 </select>
 
 <div class="total" id="total">
-المجموع : 250 درهم
+💰 المجموع : 250 درهم
 </div>
 
 <h3>أدخل معلوماتك:</h3>
@@ -134,10 +136,10 @@ footer {
 </footer>
 
 <script>
-// ⚡ Stock المتوفر لديك
-var stock = 50; // ضع هنا عدد الوحدات المتوفرة لديك
+// ⚡ Stock
+var stock = 50;
 
-// إنشاء خيارات العدد تلقائيًا حسب Stock
+// إنشاء الكمية
 var quantitySelect = document.getElementById("quantity");
 for (var i = 1; i <= stock; i++) {
     var option = document.createElement("option");
@@ -146,24 +148,24 @@ for (var i = 1; i <= stock; i++) {
     quantitySelect.appendChild(option);
 }
 
-// حساب المجموع تلقائيًا
+// حساب المجموع
 function calculateTotal() {
-    var price = 230;
-    var delivery = 20;
+    var price = 250;
     var quantity = parseInt(document.getElementById("quantity").value);
-    
+
     if(quantity > stock){
-        alert("الكمية المطلوبة أكبر من المخزون المتوفر (" + stock + ")");
+        alert("الكمية أكبر من المخزون (" + stock + ")");
         document.getElementById("quantity").value = stock;
         quantity = stock;
     }
 
-    var total = (price * quantity) + delivery;
+    var total = price * quantity;
+
     document.getElementById("total").innerHTML =
-    "المجموع : " + total + " درهم";
+    "💰 المجموع : " + total + " درهم";
 }
 
-// إرسال الطلب إلى واتساب
+// إرسال الطلب
 function sendOrder() {
     var quantity = parseInt(document.getElementById("quantity").value);
     var name = document.getElementById("name").value;
@@ -176,16 +178,13 @@ function sendOrder() {
         return;
     }
 
-    if(quantity > stock){
-        alert("الكمية المطلوبة أكبر من المخزون المتوفر (" + stock + ")");
-        return;
-    }
+    var total = 250 * quantity;
 
-    var total = (230 * quantity) + 20;
     var message = "طلب جديد من Aura Cosmetics:%0A"
     + "المنتج: Beauty of Joseon SPF50+%0A"
     + "العدد: " + quantity + "%0A"
-    + "المجموع: " + total + " درهم%0A%0A"
+    + "المجموع: " + total + " درهم%0A"
+    + "🚚 التوصيل: مجاني%0A%0A"
     + "الاسم: " + name + "%0A"
     + "الهاتف: " + phone + "%0A"
     + "المدينة: " + city + "%0A"
@@ -194,7 +193,7 @@ function sendOrder() {
     window.open("https://wa.me/212663530438?text=" + message, "_blank");
 }
 
-// حساب المجموع عند التحميل أول مرة
+// أول تحميل
 calculateTotal();
 </script>
 
